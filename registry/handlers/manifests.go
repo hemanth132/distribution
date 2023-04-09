@@ -531,19 +531,20 @@ func (imh *manifestHandler) DeleteManifest(w http.ResponseWriter, r *http.Reques
 		}
 	}
 
-	tagService := imh.Repository.Tags(imh)
-	referencedTags, err := tagService.Lookup(imh, distribution.Descriptor{Digest: imh.Digest})
-	if err != nil {
-		imh.Errors = append(imh.Errors, err)
-		return
-	}
-
-	for _, tag := range referencedTags {
-		if err := tagService.Untag(imh, tag); err != nil {
-			imh.Errors = append(imh.Errors, err)
-			return
-		}
-	}
+	// commenting this, the actual tag deletion will be handled by the harbor client
+	//tagService := imh.Repository.Tags(imh)
+	//referencedTags, err := tagService.Lookup(imh, distribution.Descriptor{Digest: imh.Digest})
+	//if err != nil {
+	//	imh.Errors = append(imh.Errors, err)
+	//	return
+	//}
+	//
+	//for _, tag := range referencedTags {
+	//	if err := tagService.Untag(imh, tag); err != nil {
+	//		imh.Errors = append(imh.Errors, err)
+	//		return
+	//	}
+	//}
 
 	w.WriteHeader(http.StatusAccepted)
 }
